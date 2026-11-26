@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisado — Controle de Manutenção de Veículos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- =========================================================
+       TELA 1 - ENTRADA (criar conta e entrar)
+       ========================================================= -->
+  <section id="tela-entrada" class="tela ativa tela-entrada">
+    <div class="cabecalho">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#E8871E" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Logotipo do Revisado">
+        <path d="M3 13l2-5a2 2 0 0 1 2-1.4h10A2 2 0 0 1 19 8l2 5"></path>
+        <path d="M3 13h18v4H3z"></path>
+        <circle cx="7" cy="19" r="1.6"></circle>
+        <circle cx="17" cy="19" r="1.6"></circle>
+      </svg>
+      <h1>Seu carro avisa<br>quando precisa<br>de manutenção.</h1>
+      <p>Cadastre o veículo uma vez. Depois disso o app calcula o resto sozinho.</p>
+    </div>
+
+    <div class="painel-branco">
+      <div id="campos-registro" hidden>
+        <div class="campo">
+          <label for="nome">Seu nome</label>
+          <input id="nome" type="text" autocomplete="name">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" autocomplete="email">
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" autocomplete="current-password">
+      </div>
+
+      <div id="erro-entrada" class="aviso aviso-erro" hidden></div>
+
+      <button id="btn-entrar" class="botao botao-primario">Entrar</button>
+
+      <p class="alternar">
+        <span id="texto-alternar">Ainda não tem conta?</span>
+        <button id="btn-alternar" class="botao-texto">Criar conta</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TELA 2 - CADASTRO DO VEÍCULO
+       ========================================================= -->
+  <section id="tela-veiculo" class="tela tela-entrada">
+    <div class="cabecalho">
+      <h1 id="titulo-veiculo">Vamos cadastrar<br>seu carro.</h1>
+      <p>Três respostas e pronto.</p>
+    </div>
+
+    <div class="painel-branco">
+      <div class="campo">
+        <label for="modelo">Modelo do carro</label>
+        <input id="modelo" type="text" placeholder="Chevrolet Onix">
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo">
+          <label for="ano">Ano</label>
+          <input id="ano" type="number" inputmode="numeric" placeholder="2021">
+        </div>
+        <div class="campo">
+          <label for="km-inicial">Km atual</label>
+          <input id="km-inicial" type="number" inputmode="numeric" placeholder="62450">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="km-mes">Quantos km você roda por mês, mais ou menos?</label>
+        <input id="km-mes" type="number" inputmode="numeric" value="1000">
+      </div>
+
+      <div class="aviso aviso-info">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0F4C5C" stroke-width="2.2"
+             stroke-linecap="round" style="flex:none;margin-top:1px" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.6v.1"></path>
+        </svg>
+        <p style="margin:0">O plano de manutenção do seu modelo já vem pronto. Você só confirma a
+          quilometragem de vez em quando.</p>
+      </div>
+
+      <div id="erro-veiculo" class="aviso aviso-erro" hidden></div>
+
+      <button id="btn-salvar-veiculo" class="botao botao-primario">Começar</button>
+      <button id="btn-cancelar-veiculo" class="botao-texto" style="margin-bottom:8px" hidden>Cancelar</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TELA 3 - INÍCIO
+       ========================================================= -->
+  <section id="tela-inicio" class="tela">
+    <div class="topo-marca">
+      <div class="marca">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8871E" stroke-width="2.2"
+             stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Logotipo do Revisado">
+          <path d="M3 13l2-5a2 2 0 0 1 2-1.4h10A2 2 0 0 1 19 8l2 5"></path>
+          <path d="M3 13h18v4H3z"></path>
+          <circle cx="7" cy="19" r="1.6"></circle>
+          <circle cx="17" cy="19" r="1.6"></circle>
+        </svg>
+        <span>Revisado</span>
+      </div>
+      <button id="btn-sair" class="avatar" title="Sair da conta">—</button>
+    </div>
+
+    <div class="seletor-veiculo">
+      <!-- Abas: permitem ter mais de um carro cadastrado -->
+      <div id="abas-veiculos" class="abas-veiculos"></div>
+
+      <div class="cartao cartao-veiculo">
+        <span class="rotulo">Seu veículo</span>
+        <h2 id="nome-veiculo">—</h2>
+        <div class="linha-km">
+          <span id="km-veiculo" class="numerao">0</span>
+          <span class="unidade">km</span>
+        </div>
+        <span id="km-nota" class="secundario"></span>
+      </div>
+    </div>
+
+    <div class="conteudo">
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <h2>Próximas manutenções</h2>
+        <button class="botao-texto" data-ir="tela-historico">Ver histórico</button>
+      </div>
+
+      <div id="lista-manutencoes" style="display:flex;flex-direction:column;gap:10px"></div>
+
+      <div class="cartao" style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span class="secundario" style="font-weight:600">Gastos este mês</span>
+          <span id="gasto-mes" style="font-size:22px;font-weight:800;font-variant-numeric:tabular-nums">R$ 0,00</span>
+        </div>
+        <svg width="78" height="38" viewBox="0 0 78 38" fill="none" role="img" aria-label="Tendência dos gastos">
+          <path d="M2 30 L17 26 L32 28 L47 18 L62 20 L76 8" stroke="#2A7F93" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="76" cy="8" r="3.4" fill="#E8871E"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <div style="padding:0 20px 12px">
+      <button class="botao botao-primario" data-ir="tela-registrar">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1C2429" stroke-width="2.6"
+             stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+        Registrar serviço
+      </button>
+    </div>
+
+    <nav class="rodape">
+      <button class="ativo" data-ir="tela-inicio">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path></svg>
+        Início
+      </button>
+      <button data-ir="tela-historico">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>
+        Histórico
+      </button>
+      <button id="btn-novo-carro-nav">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+        Novo carro
+      </button>
+    </nav>
+  </section>
+
+  <!-- =========================================================
+       TELA 4 - REGISTRAR SERVIÇO
+       ========================================================= -->
+  <section id="tela-registrar" class="tela">
+    <div class="topo-interno">
+      <button class="voltar" data-ir="tela-inicio" aria-label="Voltar para o início">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1C2429" stroke-width="2.4"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+      </button>
+      <h2>Registrar serviço</h2>
+    </div>
+
+    <div class="conteudo">
+      <div style="background:var(--principal);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+        <label for="km-painel" style="font-size:15px;font-weight:700;color:#fff">Quanto marca o painel hoje?</label>
+        <div style="display:flex;align-items:center;gap:10px">
+          <input id="km-painel" type="number" inputmode="numeric"
+                 style="flex:1;min-width:0;height:52px;border:none;border-radius:11px;padding:0 16px;font-family:inherit;font-size:24px;font-weight:800;color:var(--texto)">
+          <span style="font-size:16px;font-weight:700;color:#BBD4DC">km</span>
+        </div>
+        <p id="km-ultimo-registro" class="secundario" style="margin:0;color:#BBD4DC"></p>
+      </div>
+
+      <div class="campo">
+        <label for="item-servico">Qual manutenção foi feita?</label>
+        <select id="item-servico">
+          <option value="">Selecione…</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="descricao">Descrição do serviço</label>
+        <input id="descricao" type="text" placeholder="Troca de óleo e filtro">
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo">
+          <label for="data-servico">Data</label>
+          <input id="data-servico" type="date">
+        </div>
+        <div class="campo">
+          <label for="valor">Valor (R$)</label>
+          <input id="valor" type="number" inputmode="decimal" step="0.01" placeholder="280,00">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="oficina">Oficina (opcional)</label>
+        <input id="oficina" type="text" placeholder="Oficina do Zé">
+      </div>
+
+      <div id="erro-servico" class="aviso aviso-erro" hidden></div>
+    </div>
+
+    <div style="padding:0 20px 20px">
+      <button id="btn-confirmar-servico" class="botao botao-primario">Confirmar</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TELA 5 - CONFIRMAÇÃO
+       ========================================================= -->
+  <section id="tela-confirmacao" class="tela">
+    <div class="faixa-sucesso">
+      <span class="circulo-check">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2E7D4F" stroke-width="3"
+             stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Serviço registrado com sucesso">
+          <path d="M4 12.5l5.2 5L20 7"></path>
+        </svg>
+      </span>
+      <h1>Serviço registrado</h1>
+      <p>O próximo aviso já foi recalculado com a quilometragem nova.</p>
+    </div>
+
+    <div class="conteudo">
+      <div class="cartao" style="display:flex;flex-direction:column;gap:12px">
+        <span class="rotulo">O que foi registrado</span>
+        <div id="resumo-servico" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+
+      <div id="bloco-proximo-aviso" class="proximo-aviso" hidden>
+        <span class="icone">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1C2429" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 9a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"></path>
+            <path d="M10.3 20a2 2 0 0 0 3.4 0"></path>
+          </svg>
+        </span>
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <span class="rotulo" style="color:#8A5407">Próximo aviso</span>
+          <span id="texto-proximo-aviso" style="font-size:15px;font-weight:700"></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 20px 24px;display:flex;flex-direction:column;gap:10px">
+      <button class="botao botao-secundario" data-ir="tela-inicio">Voltar ao início</button>
+      <button class="botao botao-contorno" data-ir="tela-historico">Ver no histórico</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TELA 6 - HISTÓRICO
+       ========================================================= -->
+  <section id="tela-historico" class="tela">
+    <div class="topo-interno" style="flex-direction:column;align-items:stretch;gap:14px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <button class="voltar" data-ir="tela-inicio" aria-label="Voltar para o início">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1C2429" stroke-width="2.4"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+        </button>
+        <h2>Histórico</h2>
+      </div>
+      <div class="busca">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5A6670" stroke-width="2.2"
+             stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5L21 21"></path></svg>
+        <label for="busca" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Buscar peça ou serviço</label>
+        <input id="busca" type="text" placeholder="Buscar peça ou serviço">
+      </div>
+    </div>
+
+    <div class="conteudo">
+      <div class="resumo-ano">
+        <div class="bloco">
+          <span class="rotulo">Gasto em <span id="ano-corrente"></span></span>
+          <span id="gasto-ano" class="valor">R$ 0,00</span>
+        </div>
+        <div class="bloco" style="text-align:right">
+          <span class="rotulo">Por km</span>
+          <span id="custo-km" class="valor destaque">R$ 0,00</span>
+        </div>
+      </div>
+
+      <div id="lista-historico" style="display:flex;flex-direction:column;gap:12px"></div>
+    </div>
+
+    <nav class="rodape">
+      <button data-ir="tela-inicio">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path></svg>
+        Início
+      </button>
+      <button class="ativo" data-ir="tela-historico">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>
+        Histórico
+      </button>
+      <button id="btn-novo-carro-nav2">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+        Novo carro
+      </button>
+    </nav>
+  </section>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

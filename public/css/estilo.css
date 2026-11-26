@@ -1,0 +1,261 @@
+/* ===============================================================
+   Revisado - identidade visual
+   As cores e a tipografia vêm da etapa de Prototipagem (Figma).
+   Cada cor tem uma função definida, nenhuma entra por enfeite.
+   =============================================================== */
+
+:root {
+  /* Paleta */
+  --principal:    #0F4C5C;  /* marca, cabeçalho, botão secundário */
+  --principal-claro: #1D6377;
+  --secundaria:   #2A7F93;  /* gráficos e detalhes de apoio */
+  --destaque:     #E8871E;  /* ação principal da tela */
+  --destaque-escuro: #C25F1C;
+  --fundo:        #F2F4F5;  /* fundo das telas */
+  --superficie:   #FFFFFF;  /* cartões */
+  --texto:        #1C2429;  /* texto principal */
+  --texto-fraco:  #5A6670;  /* texto secundário */
+  --borda:        #DDE3E5;
+  --borda-campo:  #CBD4D7;
+
+  /* Estados da manutenção: cor + palavra, nunca só a cor */
+  --em-dia:        #2E7D4F;
+  --em-dia-fundo:  #E6F2EB;
+  --em-dia-texto:  #22633D;
+  --em-breve:      #C97A10;
+  --em-breve-fundo:#FBF1DF;
+  --em-breve-texto:#8A5407;
+  --urgente:       #B3382B;
+  --urgente-fundo: #FBEAE8;
+
+  /* Tipografia */
+  --fonte: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  background: #E7EBED;
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* O app fica numa coluna estreita, como no protótipo de celular,
+   mas acompanha a tela quando ela é menor. */
+#app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--fundo);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(0,0,0,.08);
+}
+
+.tela { display: none; flex-direction: column; flex: 1; }
+.tela.ativa { display: flex; }
+
+/* --- Tipografia ------------------------------------------------ */
+h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin: 0; }
+h2 { font-size: 17px; font-weight: 700; margin: 0; }
+h3 { font-size: 15px; font-weight: 700; margin: 0; }
+.rotulo {
+  font-size: 12px; font-weight: 800; letter-spacing: .5px;
+  text-transform: uppercase; color: var(--texto-fraco);
+}
+.secundario { font-size: 13px; color: var(--texto-fraco); }
+.numerao { font-size: 34px; font-weight: 800; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+
+/* --- Cabeçalho da marca ---------------------------------------- */
+.topo-marca {
+  background: var(--principal);
+  padding: 24px 20px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.marca { display: flex; align-items: center; gap: 10px; }
+.marca span { color: #fff; font-size: 19px; font-weight: 800; letter-spacing: -.3px; }
+.avatar {
+  width: 36px; height: 36px; border-radius: 18px; border: none;
+  background: var(--principal-claro); color: #fff;
+  font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+
+/* Barra de topo das telas internas */
+.topo-interno {
+  background: var(--superficie); border-bottom: 1px solid var(--borda);
+  padding: 20px; display: flex; align-items: center; gap: 14px;
+}
+.voltar {
+  width: 36px; height: 36px; border-radius: 10px; border: none;
+  background: var(--fundo); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* --- Cartões ---------------------------------------------------- */
+.cartao {
+  background: var(--superficie); border-radius: 12px; padding: 16px;
+}
+.conteudo { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+/* Seletor de veículo: permite ter mais de um carro */
+.seletor-veiculo {
+  background: var(--principal); padding: 0 20px 22px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.abas-veiculos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+.aba-veiculo {
+  flex: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 20px;
+  background: var(--principal-claro); color: #BBD4DC; white-space: nowrap;
+}
+.aba-veiculo.ativa { background: #fff; color: var(--principal); }
+.aba-veiculo.nova { background: transparent; border: 1.5px dashed #4A7D8C; color: #BBD4DC; }
+
+.cartao-veiculo { display: flex; flex-direction: column; gap: 2px; }
+.cartao-veiculo .linha-km { display: flex; align-items: baseline; gap: 7px; margin-top: 4px; }
+.cartao-veiculo .unidade { font-size: 16px; font-weight: 600; color: var(--texto-fraco); }
+
+/* --- Item de manutenção ---------------------------------------- */
+.item-manutencao {
+  background: var(--superficie); border-radius: 12px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 13px;
+}
+.bolinha { width: 10px; height: 10px; border-radius: 5px; flex: none; }
+.item-manutencao .meio { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.etiqueta {
+  font-size: 11px; font-weight: 700; letter-spacing: .3px;
+  padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+}
+.em_dia   .bolinha { background: var(--em-dia); }
+.em_dia   .etiqueta { background: var(--em-dia-fundo); color: var(--em-dia-texto); }
+.em_breve .bolinha { background: var(--em-breve); }
+.em_breve .etiqueta { background: var(--em-breve-fundo); color: var(--em-breve-texto); }
+.urgente  .bolinha { background: var(--urgente); }
+.urgente  .etiqueta { background: var(--urgente-fundo); color: var(--urgente); }
+
+/* --- Botões ----------------------------------------------------- */
+.botao {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  height: 52px; border-radius: 12px; border: none; cursor: pointer;
+  font-family: inherit; font-size: 16px; font-weight: 800; width: 100%;
+  text-decoration: none;
+}
+.botao:disabled { opacity: .55; cursor: not-allowed; }
+.botao-primario   { background: var(--destaque); color: var(--texto); }
+.botao-secundario { background: var(--principal); color: #fff; }
+.botao-contorno   { background: var(--superficie); border: 1.5px solid var(--borda-campo); color: var(--principal); font-weight: 700; height: 48px; font-size: 15px; }
+.botao-texto {
+  background: none; border: none; color: var(--principal);
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0;
+}
+
+/* --- Campos ----------------------------------------------------- */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-size: 13px; font-weight: 700; color: #3C4852; }
+.campo input, .campo select, .campo textarea {
+  height: 50px; border: 1.5px solid var(--borda-campo); border-radius: 11px;
+  background: var(--superficie); padding: 0 15px;
+  font-family: inherit; font-size: 16px; font-weight: 600; color: var(--texto);
+}
+.campo textarea { height: auto; padding: 12px 15px; font-weight: 400; }
+.campo input:focus, .campo select:focus { outline: none; border-color: var(--principal); }
+.campo.erro input, .campo.erro select { border-color: var(--urgente); }
+.campo .mensagem-erro { font-size: 12px; color: var(--urgente); font-weight: 600; }
+.linha-campos { display: flex; gap: 12px; }
+.linha-campos .campo { flex: 1; min-width: 0; }
+
+/* --- Navegação -------------------------------------------------- */
+nav.rodape {
+  border-top: 1px solid var(--borda); background: var(--superficie);
+  display: flex; padding: 10px 0 14px;
+}
+nav.rodape button {
+  flex: 1; background: none; border: none; cursor: pointer; font-family: inherit;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; color: var(--texto-fraco);
+}
+nav.rodape button.ativo { color: var(--principal); font-weight: 700; }
+
+/* --- Avisos ----------------------------------------------------- */
+.aviso {
+  border-radius: 11px; padding: 14px 16px; font-size: 13px; line-height: 1.5;
+  display: flex; gap: 11px; align-items: flex-start;
+}
+.aviso-info { background: #E7EFF1; color: #28434D; }
+.aviso-erro { background: var(--urgente-fundo); color: var(--urgente); font-weight: 600; }
+
+.vazio {
+  padding: 36px 20px; text-align: center; color: var(--texto-fraco); font-size: 14px;
+}
+
+/* --- Histórico -------------------------------------------------- */
+.resumo-ano {
+  background: var(--principal); border-radius: 12px; padding: 15px 17px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.resumo-ano .bloco { display: flex; flex-direction: column; gap: 2px; }
+.resumo-ano .rotulo { color: #BBD4DC; }
+.resumo-ano .valor { font-size: 22px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+.resumo-ano .valor.destaque { color: var(--destaque); }
+
+.item-historico {
+  background: var(--superficie); border-radius: 12px; padding: 15px 16px;
+  display: flex; gap: 13px; align-items: flex-start;
+}
+.data-bloco { display: flex; flex-direction: column; align-items: center; width: 42px; flex: none; }
+.data-bloco .dia { font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.data-bloco .mes { font-size: 11px; font-weight: 600; color: var(--texto-fraco); }
+.item-historico .meio { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.item-historico .valor { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.busca {
+  display: flex; align-items: center; gap: 10px; height: 44px;
+  border: 1.5px solid var(--borda-campo); border-radius: 11px;
+  padding: 0 13px; background: var(--superficie);
+}
+.busca input {
+  flex: 1; min-width: 0; border: none; outline: none;
+  font-family: inherit; font-size: 15px; background: transparent; color: var(--texto);
+}
+
+/* --- Confirmação ------------------------------------------------ */
+.faixa-sucesso {
+  background: var(--em-dia); padding: 48px 24px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+}
+.circulo-check {
+  width: 72px; height: 72px; border-radius: 36px; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.faixa-sucesso h1 { color: #fff; font-size: 24px; }
+.faixa-sucesso p { margin: 0; font-size: 15px; line-height: 1.5; color: #D4E8DC; }
+
+.linha-detalhe { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.linha-detalhe .chave { color: var(--texto-fraco); }
+.linha-detalhe .valor { font-weight: 700; text-align: right; }
+
+.proximo-aviso {
+  background: #FDF2E4; border-radius: 12px; padding: 16px;
+  display: flex; gap: 13px; align-items: center;
+}
+.proximo-aviso .icone {
+  width: 42px; height: 42px; border-radius: 21px; background: var(--destaque);
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+
+/* --- Entrada (login) -------------------------------------------- */
+.tela-entrada { background: var(--principal); color: #fff; }
+.tela-entrada .cabecalho { padding: 52px 24px 26px; display: flex; flex-direction: column; gap: 14px; }
+.tela-entrada .cabecalho p { margin: 0; font-size: 15px; line-height: 1.5; color: #BBD4DC; }
+.painel-branco {
+  flex: 1; background: var(--fundo); color: var(--texto);
+  border-radius: 22px 22px 0 0; padding: 28px 24px 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.alternar { text-align: center; font-size: 14px; color: var(--texto-fraco); }
+
+@media (max-width: 430px) {
+  #app { box-shadow: none; }
+}
